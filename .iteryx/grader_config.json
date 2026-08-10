@@ -1,0 +1,177 @@
+{
+  "schema": "iteryx/java-grader/v1",
+
+  "assignmentName": "Ch. 5 Challenge 4",
+
+  "project": {
+    "workingDirectory": ".",
+    "mainFile": "src/CurrentSpeed.java",
+    "mainClass": "CurrentSpeed",
+    "outputDirectory": ".iteryx/out",
+    "compileCommand": [
+      "javac",
+      "-d",
+      ".iteryx/out",
+      "src/CurrentSpeed.java"
+    ],
+    "runCommand": [
+      "java",
+      "-cp",
+      ".iteryx/out",
+      "CurrentSpeed"
+    ]
+  },
+
+  "settings": {
+    "compileTimeoutSeconds": 30,
+    "runTimeoutSeconds": 10,
+    "defaultCaseSensitive": false,
+    "defaultNormalizeWhitespace": true
+  },
+
+  "helpTopics": {
+    "scanner": {
+      "title": "Scanner Input",
+      "whereToLook": [
+        "Make sure you create a Scanner object using System.in before you try to read any input.",
+        "Read the three values in the order the prompts ask for them: target speed, rate of increase, then minutes.",
+        "Use nextDouble() since each value should be stored as a double."
+      ]
+    },
+    "methods": {
+      "title": "The currentSpeed Method",
+      "whereToLook": [
+        "The method must be named currentSpeed, be static, and return a double.",
+        "It should accept three double parameters, in this order: target speed, rate (as a decimal), and minutes.",
+        "Call the method from main and pass it the values you read from the astronaut, not literal numbers."
+      ]
+    },
+    "formula": {
+      "title": "The Speed Formula",
+      "whereToLook": [
+        "The formula is target / (1 + rate)^minutes.",
+        "Use Math.pow(1 + rate, minutes) to raise (1 + rate) to the minutes power.",
+        "Divide the entered percent (for example, 5) by 100 to convert it to decimal notation (0.05) before using it in the formula."
+      ]
+    },
+    "formatting": {
+      "title": "Output Formatting",
+      "whereToLook": [
+        "The current speed must be printed with a comma thousands separator and exactly two decimal places.",
+        "Look at String.format or printf with a pattern like %,.2f to produce this formatting."
+      ]
+    }
+  },
+
+  "sourceChecks": [
+    {
+      "name": "Uses Scanner",
+      "type": "regex",
+      "pattern": "\\bScanner\\b",
+      "points": 2,
+      "message": "This challenge requires you to use a Scanner to read the astronaut's input.",
+      "helpTopic": "scanner"
+    },
+    {
+      "name": "Defines a static currentSpeed method returning a double",
+      "type": "regex",
+      "pattern": "static\\s+double\\s+currentSpeed\\s*\\(",
+      "points": 2,
+      "message": "You need a static method named currentSpeed that returns a double. Check the method's return type and modifiers.",
+      "helpTopic": "methods"
+    },
+    {
+      "name": "Uses Math.pow for the formula",
+      "type": "regex",
+      "pattern": "Math\\s*\\.\\s*pow\\s*\\(",
+      "points": 2,
+      "message": "This challenge requires you to use Math.pow to raise (1 + rate) to the minutes power.",
+      "helpTopic": "formula"
+    }
+  ],
+
+  "tests": [
+    {
+      "name": "Target 27000, rate 5%, 10 minutes",
+      "input": "27000\n5\n10\n",
+      "expectedOutput": "Current speed: 16,575.66",
+      "comparison": "included",
+      "points": 5,
+      "message": "With a target speed of 27000, a rate of 5%, and 10 minutes, the current speed should be 16,575.66.",
+      "helpTopic": "formula",
+      "possibleErrors": [
+        {
+          "type": "no_output",
+          "message": "Your program did not produce any output. Make sure main() reads all three inputs and prints a result."
+        },
+        {
+          "type": "expected_missing",
+          "message": "Your output did not contain the expected current speed. Double-check your formula and that you are using the values entered by the astronaut."
+        },
+        {
+          "type": "runtime_error",
+          "message": "Your program crashed while running. Check that you are reading exactly three values with Scanner, in the order the prompts ask for them."
+        }
+      ]
+    },
+    {
+      "name": "Target 10000, rate 10%, 5 minutes",
+      "input": "10000\n10\n5\n",
+      "expectedOutput": "Current speed: 6,209.21",
+      "comparison": "included",
+      "points": 5,
+      "message": "With a target speed of 10000, a rate of 10%, and 5 minutes, the current speed should be 6,209.21.",
+      "helpTopic": "formula",
+      "possibleErrors": [
+        {
+          "type": "expected_missing",
+          "message": "Your output did not contain the expected current speed for these inputs. Make sure your program recalculates the result instead of reusing a value from a different run."
+        },
+        {
+          "type": "hardcoded_output_hint",
+          "badText": "16,575.66",
+          "message": "Your output still contains the result from the example run (16,575.66) even though different values were entered. Make sure you are calculating with the values read from Scanner rather than printing a fixed result."
+        }
+      ]
+    },
+    {
+      "name": "Target 50000, rate 5%, 3 minutes",
+      "input": "50000\n5\n3\n",
+      "expectedOutput": "Current speed: 43,191.88",
+      "comparison": "included",
+      "points": 5,
+      "message": "With a target speed of 50000, a rate of 5%, and 3 minutes, the current speed should be 43,191.88.",
+      "helpTopic": "formula",
+      "possibleErrors": [
+        {
+          "type": "expected_missing",
+          "message": "Your output did not contain the expected current speed for these inputs. Check that your rate conversion (percent to decimal) and Math.pow call use the values entered for this run."
+        },
+        {
+          "type": "hardcoded_output_hint",
+          "badText": "16,575.66",
+          "message": "Your output still contains the result from the example run (16,575.66) even though different values were entered. Make sure you are calculating with the values read from Scanner rather than printing a fixed result."
+        }
+      ]
+    },
+    {
+      "name": "Target 5000, rate 0%, 20 minutes",
+      "input": "5000\n0\n20\n",
+      "expectedOutput": "Current speed: 5,000.00",
+      "comparison": "included",
+      "points": 4,
+      "message": "With a rate of 0%, the current speed should equal the target speed exactly, formatted as 5,000.00.",
+      "helpTopic": "formatting",
+      "possibleErrors": [
+        {
+          "type": "expected_missing",
+          "message": "When the rate is 0%, the current speed should equal the target speed, formatted with two decimal places and comma separators. Check your output formatting."
+        },
+        {
+          "type": "timeout",
+          "message": "Your program did not finish running. Make sure it does not wait for more input than the three values the prompts ask for."
+        }
+      ]
+    }
+  ]
+}

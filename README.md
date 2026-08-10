@@ -2,12 +2,44 @@ Speedometers aren't really a thing in space. There are no wheels rolling on the 
 
 `currentSpeed = (targetSpeed)/(1 + rateOfIncrease)^numberOfMinutes`
 
-Write a method named calcCurrentSpeed that performs this calculation. The method should accept the target speed in kilometers, percent increase per minute, and number of minutes as arguments. It should return the current speed of the spacecraft in kilometers. Demonstrate the method in a program that lets our astronauts experiment with different values for the formula's terms.
+Write a static method named `currentSpeed` that performs this calculation. The method should accept the target speed (`double`), the rate of increase as a decimal (`double`), and the number of minutes (`double`) as arguments, in that order, and return the current speed as a `double`. Use `Math.pow` to raise `(1 + rate)` to the `minutes` power.
 
-Things you need to pass the tests:
+Demonstrate the method in a `main` method that lets an astronaut enter the target speed, the rate of increase, and the number of minutes, then prints the resulting current speed.
 
-> Input 1 - Enter target speed: 
-> Input 2 - Rate of speed increase per minute: 
-> Input 3 - Minutes until target speed achieved: 
-> Formula - `current = target / (1 + rate)^minutes)`
-> Output - Current speed: `[current]`(be sure to include 2 decimal places and commas)
+## What You're Building
+
+A program that:
+
+1. Uses `Scanner` to read three values from the astronaut: target speed, rate of increase per minute, and number of minutes.
+2. Converts the entered rate of increase from a whole-number percent (e.g. `5` for 5%) into decimal notation (e.g. `0.05`) before using it in the formula.
+3. Calls the `currentSpeed` method, passing the target speed, the decimal rate, and the number of minutes.
+4. Displays the result formatted with commas and exactly two decimal places.
+
+## Required Prompts and Output
+
+Your program must use these exact prompts and output label:
+
+```
+Enter target speed: 
+Rate of speed increase per minute: 
+Minutes until target speed achieved: 
+Current speed: [current]
+```
+
+Where `[current]` is the calculated current speed, formatted with a comma thousands separator and exactly two decimal places (for example, `16,575.66`).
+
+## Example Run
+
+```
+Enter target speed: 27000
+Rate of speed increase per minute: 5
+Minutes until target speed achieved: 10
+Current speed: 16,575.66
+```
+
+## Java Concepts Used
+
+- Variables and `Scanner` input
+- A static method with parameters and a return value
+- `Math.pow` for exponentiation
+- Formatted output (comma separators, two decimal places)
