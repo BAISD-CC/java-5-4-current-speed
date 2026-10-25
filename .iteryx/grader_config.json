@@ -1,8 +1,6 @@
 {
   "schema": "iteryx/java-grader/v1",
-
   "assignmentName": "Ch. 5 Challenge 4",
-
   "project": {
     "workingDirectory": ".",
     "mainFile": "src/CurrentSpeed.java",
@@ -21,14 +19,12 @@
       "CurrentSpeed"
     ]
   },
-
   "settings": {
     "compileTimeoutSeconds": 30,
     "runTimeoutSeconds": 10,
     "defaultCaseSensitive": false,
     "defaultNormalizeWhitespace": true
   },
-
   "helpTopics": {
     "scanner": {
       "title": "Scanner Input",
@@ -62,14 +58,13 @@
       ]
     }
   },
-
   "sourceChecks": [
     {
       "name": "Uses Scanner",
       "type": "regex",
-      "pattern": "\\bScanner\\b",
+      "pattern": "new\\s+Scanner\\s*\\(\\s*System\\.in\\s*\\)",
       "points": 2,
-      "message": "This challenge requires you to use a Scanner to read the astronaut's input.",
+      "message": "This challenge requires you to create a Scanner with System.in to read the astronaut's input.",
       "helpTopic": "scanner"
     },
     {
@@ -89,7 +84,6 @@
       "helpTopic": "formula"
     }
   ],
-
   "tests": [
     {
       "name": "Target 27000, rate 5%, 10 minutes",
