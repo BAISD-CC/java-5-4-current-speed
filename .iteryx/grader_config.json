@@ -26,144 +26,395 @@
     "defaultNormalizeWhitespace": true
   },
   "helpTopics": {
-    "scanner": {
-      "title": "Scanner Input",
+    "todo1": {
+      "title": "TODO 1: Imports",
       "whereToLook": [
-        "Make sure you create a Scanner object using System.in before you try to read any input.",
-        "Read the three values in the order the prompts ask for them: target speed, rate of increase, then minutes.",
-        "Use nextDouble() since each value should be stored as a double."
+        "Scanner comes from java.util. File and IOException come from java.io.",
+        "Each import is its own line at the very top of the file, above the class: import java.util.Scanner; and so on."
       ]
     },
-    "methods": {
-      "title": "The currentSpeed Method",
+    "todo2": {
+      "title": "TODO 2: main",
       "whereToLook": [
-        "The method must be named currentSpeed, be static, and return a double.",
-        "It should accept three double parameters, in this order: target speed, rate (as a decimal), and minutes.",
-        "Call the method from main and pass it the values you read from the astronaut, not literal numbers."
+        "Day 3 notes, TH1 (A method that reads a file): main calls getTotalFuel, which opens a file, so main's header ends with throws IOException.",
+        "The rule: a method that opens a file needs the clause, and so does every method that calls it, all the way up to main."
       ]
     },
-    "formula": {
-      "title": "The Speed Formula",
+    "todo3": {
+      "title": "TODO 3: getFileName",
       "whereToLook": [
-        "The formula is target / (1 + rate)^minutes.",
-        "Use Math.pow(1 + rate, minutes) to raise (1 + rate) to the minutes power.",
-        "Divide the entered percent (for example, 5) by 100 to convert it to decimal notation (0.05) before using it in the formula."
+        "Day 3 notes, TH1: getFileName is the same method you need. It receives the Scanner, prints a prompt, and returns keyboard.nextLine().",
+        "Use print, not println, so the user types on the same line as the prompt.",
+        "getFileName only reads the keyboard, so it doesn't get a throws clause."
       ]
     },
-    "formatting": {
-      "title": "Output Formatting",
+    "todo4": {
+      "title": "TODO 4: fileExists",
       "whereToLook": [
-        "The current speed must be printed with a comma thousands separator and exactly two decimal places.",
-        "Look at String.format or printf with a pattern like %,.2f to produce this formatting."
+        "Make a File object for the name: File file = new File(fileName); then file.exists() is true or false.",
+        "Day 2 notes, B1 (A boolean return as a condition): a boolean method can be the condition of a loop. In main, keep asking while !fileExists(fileName).",
+        "exists() doesn't open the file, so fileExists doesn't get a throws clause."
+      ]
+    },
+    "todo5": {
+      "title": "TODO 5: countReadings",
+      "whereToLook": [
+        "Day 3 notes, TH1: getTotalFuel opens a file with new Scanner(file) and loops while inputFile.hasNext().",
+        "Add 1 to a count each time through the loop, and still read the number with nextDouble(). If you don't read it, the loop never ends.",
+        "Close the file before you return the count. The header needs throws IOException."
+      ]
+    },
+    "todo6": {
+      "title": "TODO 6: getTotalSpeed",
+      "whereToLook": [
+        "Day 3 notes, TH1: getTotalFuel is the same pattern. Start a total at 0 and add each reading to it.",
+        "The header needs throws IOException because the method opens a file."
+      ]
+    },
+    "todo7": {
+      "title": "TODO 7: getCurrentSpeed",
+      "whereToLook": [
+        "Same loop as getTotalSpeed, but instead of adding each reading, store it in a variable. When the loop ends, that variable holds the last reading.",
+        "The header needs throws IOException because the method opens a file."
+      ]
+    },
+    "todo8": {
+      "title": "TODO 8: calcAverage",
+      "whereToLook": [
+        "Day 3 notes, FD1 (One task per method): a calculation method takes values and returns the result, with no printing.",
+        "The parameters are a double and then an int. Return the total divided by the count.",
+        "The average is only right if countReadings (TODO 5) and getTotalSpeed (TODO 6) are right too."
+      ]
+    },
+    "todo9": {
+      "title": "TODO 9: getStatus",
+      "whereToLook": [
+        "Day 2 notes, S1 (Returning a String): build the status and return it.",
+        "Check the highest range first: 40,000 or more is Escape velocity, then 28,000 or more is Orbital, and everything else is Suborbital.",
+        "These ranges include their starting number, so the checks use >=. Exactly 28,000 is Orbital, and exactly 40,000 is Escape velocity."
+      ]
+    },
+    "todo10": {
+      "title": "TODO 10: displayReport",
+      "whereToLook": [
+        "Day 3 notes, FD1: displayResults is an output method. It's void and takes the values it displays.",
+        "Day 1 notes, M3 (A method that calls a method): for the Status line, displayReport calls getStatus with the current speed.",
+        "The two speed lines use printf with %,.2f: the comma adds the thousands separator, and .2 gives two decimal places."
       ]
     }
   },
   "sourceChecks": [
     {
-      "name": "Uses Scanner",
+      "name": "TODO 1: Imports",
       "type": "regex",
-      "pattern": "new\\s+Scanner\\s*\\(\\s*System\\.in\\s*\\)",
-      "points": 2,
-      "message": "This challenge requires you to create a Scanner with System.in to read the astronaut's input.",
-      "helpTopic": "scanner"
+      "pattern": "(?s)^(?=.*import\\s+java\\.util\\.(Scanner|\\*)\\s*;)(?=.*import\\s+java\\.io\\.(File|\\*)\\s*;)(?=.*import\\s+java\\.io\\.(IOException|\\*)\\s*;)",
+      "points": 1,
+      "message": "Import Scanner from java.util, and File and IOException from java.io.",
+      "helpTopic": "todo1"
     },
     {
-      "name": "Defines a static currentSpeed method returning a double",
+      "name": "TODO 2: main has throws IOException",
       "type": "regex",
-      "pattern": "static\\s+double\\s+currentSpeed\\s*\\(",
+      "pattern": "\\bstatic\\s+void\\s+main\\s*\\(\\s*String\\s*(\\[\\s*\\]\\s*\\w+|\\w+\\s*\\[\\s*\\])\\s*\\)\\s*throws\\s+IOException",
       "points": 2,
-      "message": "You need a static method named currentSpeed that returns a double. Check the method's return type and modifiers.",
-      "helpTopic": "methods"
+      "message": "main calls methods that open a file, so its header needs throws IOException.",
+      "helpTopic": "todo2"
     },
     {
-      "name": "Uses Math.pow for the formula",
+      "name": "TODO 3: getFileName header",
       "type": "regex",
-      "pattern": "Math\\s*\\.\\s*pow\\s*\\(",
-      "points": 2,
-      "message": "This challenge requires you to use Math.pow to raise (1 + rate) to the minutes power.",
-      "helpTopic": "formula"
+      "pattern": "\\bString\\s+getFileName\\s*\\(\\s*Scanner\\s+\\w+\\s*\\)\\s*\\{",
+      "points": 1,
+      "message": "Write a method named getFileName that has one Scanner parameter and returns a String. It only reads the keyboard, so it has no throws clause.",
+      "helpTopic": "todo3"
+    },
+    {
+      "name": "TODO 4: fileExists header",
+      "type": "regex",
+      "pattern": "\\bboolean\\s+fileExists\\s*\\(\\s*String\\s+\\w+\\s*\\)\\s*\\{",
+      "points": 1,
+      "message": "Write a method named fileExists that has one String parameter and returns a boolean. It doesn't open the file, so it has no throws clause.",
+      "helpTopic": "todo4"
+    },
+    {
+      "name": "TODO 5: countReadings header",
+      "type": "regex",
+      "pattern": "\\bint\\s+countReadings\\s*\\(\\s*String\\s+\\w+\\s*\\)\\s*throws\\s+IOException",
+      "points": 1,
+      "message": "Write a method named countReadings that has one String parameter, returns an int, and has throws IOException because it opens a file.",
+      "helpTopic": "todo5"
+    },
+    {
+      "name": "TODO 6: getTotalSpeed header",
+      "type": "regex",
+      "pattern": "\\bdouble\\s+getTotalSpeed\\s*\\(\\s*String\\s+\\w+\\s*\\)\\s*throws\\s+IOException",
+      "points": 1,
+      "message": "Write a method named getTotalSpeed that has one String parameter, returns a double, and has throws IOException because it opens a file.",
+      "helpTopic": "todo6"
+    },
+    {
+      "name": "TODO 7: getCurrentSpeed header",
+      "type": "regex",
+      "pattern": "\\bdouble\\s+getCurrentSpeed\\s*\\(\\s*String\\s+\\w+\\s*\\)\\s*throws\\s+IOException",
+      "points": 1,
+      "message": "Write a method named getCurrentSpeed that has one String parameter, returns a double, and has throws IOException because it opens a file.",
+      "helpTopic": "todo7"
+    },
+    {
+      "name": "TODO 8: calcAverage header",
+      "type": "regex",
+      "pattern": "\\bdouble\\s+calcAverage\\s*\\(\\s*double\\s+\\w+\\s*,\\s*int\\s+\\w+\\s*\\)\\s*\\{",
+      "points": 1,
+      "message": "Write a method named calcAverage that has a double parameter and then an int parameter, and returns a double. It doesn't open a file, so it has no throws clause.",
+      "helpTopic": "todo8"
+    },
+    {
+      "name": "TODO 9: getStatus header",
+      "type": "regex",
+      "pattern": "\\bString\\s+getStatus\\s*\\(\\s*double\\s+\\w+\\s*\\)\\s*\\{",
+      "points": 1,
+      "message": "Write a method named getStatus that has one double parameter and returns a String. It doesn't open a file, so it has no throws clause.",
+      "helpTopic": "todo9"
+    },
+    {
+      "name": "TODO 10: displayReport header",
+      "type": "regex",
+      "pattern": "\\bvoid\\s+displayReport\\s*\\(\\s*String\\s+\\w+\\s*,\\s*int\\s+\\w+\\s*,\\s*double\\s+\\w+\\s*,\\s*double\\s+\\w+\\s*\\)\\s*\\{",
+      "points": 1,
+      "message": "Write a void method named displayReport with four parameters: a String, an int, a double, and a double, in that order. It doesn't open a file, so it has no throws clause.",
+      "helpTopic": "todo10"
+    },
+    {
+      "name": "TODO 10: displayReport calls getStatus",
+      "type": "regex",
+      "pattern": "\\bvoid\\s+displayReport\\s*\\([^)]*\\)[^{]*\\{[^}]*\\bgetStatus\\s*\\(",
+      "points": 1,
+      "message": "displayReport should call getStatus to get the status for the current speed.",
+      "helpTopic": "todo10"
     }
   ],
   "tests": [
     {
-      "name": "Target 27000, rate 5%, 10 minutes",
-      "input": "27000\n5\n10\n",
-      "expectedOutput": "Current speed: 16,575.66",
+      "name": "TODO 3: File name prompt",
+      "input": "flight_alpha.txt\n",
+      "expectedOutput": "Enter the log file name:",
       "comparison": "included",
-      "points": 5,
-      "message": "With a target speed of 27000, a rate of 5%, and 10 minutes, the current speed should be 16,575.66.",
-      "helpTopic": "formula",
+      "points": 1,
+      "message": "getFileName should print the prompt before reading the file name.",
+      "helpTopic": "todo3",
       "possibleErrors": [
         {
           "type": "no_output",
-          "message": "Your program did not produce any output. Make sure main() reads all three inputs and prints a result."
+          "message": "Your program printed nothing. Check that main exists, creates the keyboard Scanner, and calls getFileName."
         },
         {
           "type": "expected_missing",
-          "message": "Your output did not contain the expected current speed. Double-check your formula and that you are using the values entered by the astronaut."
+          "message": "Check that getFileName prints Enter the log file name: exactly."
         },
         {
           "type": "runtime_error",
-          "message": "Your program crashed while running. Check that you are reading exactly three values with Scanner, in the order the prompts ask for them."
+          "message": "Your program crashed while running. Read the error output below for the line number."
         }
       ]
     },
     {
-      "name": "Target 10000, rate 10%, 5 minutes",
-      "input": "10000\n10\n5\n",
-      "expectedOutput": "Current speed: 6,209.21",
+      "name": "TODO 4: A file that isn't there",
+      "input": "flight_zulu.txt\nflight_alpha.txt\n",
+      "expectedOutput": "File not found: flight_zulu.txt Enter the log file name:",
       "comparison": "included",
-      "points": 5,
-      "message": "With a target speed of 10000, a rate of 10%, and 5 minutes, the current speed should be 6,209.21.",
-      "helpTopic": "formula",
+      "points": 2,
+      "message": "flight_zulu.txt doesn't exist, so the program should say so and ask again.",
+      "helpTopic": "todo4",
       "possibleErrors": [
         {
-          "type": "expected_missing",
-          "message": "Your output did not contain the expected current speed for these inputs. Make sure your program recalculates the result instead of reusing a value from a different run."
+          "type": "runtime_error",
+          "message": "Your program crashed when given a file name that doesn't exist. Check that main checks fileExists before any method opens the file."
         },
         {
-          "type": "hardcoded_output_hint",
-          "badText": "16,575.66",
-          "message": "Your output still contains the result from the example run (16,575.66) even though different values were entered. Make sure you are calculating with the values read from Scanner rather than printing a fixed result."
+          "type": "expected_missing",
+          "message": "Check that main prints File not found: [file name] and calls getFileName again while fileExists is false."
         }
       ]
     },
     {
-      "name": "Target 50000, rate 5%, 3 minutes",
-      "input": "50000\n5\n3\n",
-      "expectedOutput": "Current speed: 43,191.88",
+      "name": "TODO 5: Readings in flight_alpha.txt",
+      "input": "flight_alpha.txt\n",
+      "expectedOutput": "Readings: 6 Average speed:",
       "comparison": "included",
-      "points": 5,
-      "message": "With a target speed of 50000, a rate of 5%, and 3 minutes, the current speed should be 43,191.88.",
-      "helpTopic": "formula",
+      "points": 1,
+      "message": "flight_alpha.txt has 6 readings.",
+      "helpTopic": "todo5",
       "possibleErrors": [
-        {
-          "type": "expected_missing",
-          "message": "Your output did not contain the expected current speed for these inputs. Check that your rate conversion (percent to decimal) and Math.pow call use the values entered for this run."
-        },
-        {
-          "type": "hardcoded_output_hint",
-          "badText": "16,575.66",
-          "message": "Your output still contains the result from the example run (16,575.66) even though different values were entered. Make sure you are calculating with the values read from Scanner rather than printing a fixed result."
-        }
-      ]
-    },
-    {
-      "name": "Target 5000, rate 0%, 20 minutes",
-      "input": "5000\n0\n20\n",
-      "expectedOutput": "Current speed: 5,000.00",
-      "comparison": "included",
-      "points": 4,
-      "message": "With a rate of 0%, the current speed should equal the target speed exactly, formatted as 5,000.00.",
-      "helpTopic": "formatting",
-      "possibleErrors": [
-        {
-          "type": "expected_missing",
-          "message": "When the rate is 0%, the current speed should equal the target speed, formatted with two decimal places and comma separators. Check your output formatting."
-        },
         {
           "type": "timeout",
-          "message": "Your program did not finish running. Make sure it does not wait for more input than the three values the prompts ask for."
+          "message": "Your program never finished. In countReadings, read each number with nextDouble() inside the loop, or hasNext() stays true forever."
+        },
+        {
+          "type": "expected_missing",
+          "message": "Check that countReadings adds 1 for each reading, and that displayReport prints Readings: [count]."
+        }
+      ]
+    },
+    {
+      "name": "TODO 5: Readings in a hidden file",
+      "input": "flight_charlie.txt\n",
+      "expectedOutput": "Readings: 7 Average speed:",
+      "comparison": "included",
+      "points": 1,
+      "hidden": true,
+      "message": "countReadings should work for any log file.",
+      "helpTopic": "todo5",
+      "possibleErrors": [
+        {
+          "type": "expected_missing",
+          "message": "Your countReadings passes the visible test but not this one. Check that it counts every line, not a typed-in number."
+        }
+      ]
+    },
+    {
+      "name": "TODO 7: Current speed in flight_alpha.txt",
+      "input": "flight_alpha.txt\n",
+      "expectedOutput": "Current speed: 28,000.00 km/h",
+      "comparison": "included",
+      "points": 1,
+      "message": "The last reading in flight_alpha.txt is 28,000.",
+      "helpTopic": "todo7",
+      "possibleErrors": [
+        {
+          "type": "hardcoded_output_hint",
+          "badText": "current speed: 28000.00",
+          "message": "The speed is missing its comma. Use %,.2f in printf."
+        },
+        {
+          "type": "hardcoded_output_hint",
+          "badText": "current speed: 1,200.00",
+          "message": "Your current speed is the first reading. getCurrentSpeed should keep the last reading."
+        },
+        {
+          "type": "expected_missing",
+          "message": "Check that getCurrentSpeed sends back the last reading in the file, and that displayReport prints it with %,.2f and km/h."
+        }
+      ]
+    },
+    {
+      "name": "TODO 7: Current speed in a hidden file",
+      "input": "flight_charlie.txt\n",
+      "expectedOutput": "Current speed: 38,990.00 km/h",
+      "comparison": "included",
+      "points": 1,
+      "hidden": true,
+      "message": "getCurrentSpeed should work for any log file.",
+      "helpTopic": "todo7",
+      "possibleErrors": [
+        {
+          "type": "expected_missing",
+          "message": "Your getCurrentSpeed passes the visible test but not this one. Check that it keeps the last reading in the file."
+        }
+      ]
+    },
+    {
+      "name": "TODO 8: Average speed in flight_alpha.txt (needs TODOs 5 and 6)",
+      "input": "flight_alpha.txt\n",
+      "expectedOutput": "Average speed: 15,000.00 km/h",
+      "comparison": "included",
+      "points": 1,
+      "message": "flight_alpha.txt's readings add up to 90,000, and there are 6 of them, so the average is 15,000.",
+      "helpTopic": "todo8",
+      "possibleErrors": [
+        {
+          "type": "hardcoded_output_hint",
+          "badText": "average speed: 15000.00",
+          "message": "The speed is missing its comma. Use %,.2f in printf."
+        },
+        {
+          "type": "expected_missing",
+          "message": "Check that getTotalSpeed adds every reading, that calcAverage divides the total by the count, and that displayReport prints the average with %,.2f and km/h."
+        }
+      ]
+    },
+    {
+      "name": "TODO 8: Average speed in a hidden file (needs TODOs 5 and 6)",
+      "input": "flight_charlie.txt\n",
+      "expectedOutput": "Average speed: 21,777.31 km/h",
+      "comparison": "included",
+      "points": 1,
+      "hidden": true,
+      "message": "The average should work for any log file.",
+      "helpTopic": "todo8",
+      "possibleErrors": [
+        {
+          "type": "expected_missing",
+          "message": "Your average passes the visible test but not this one. Check getTotalSpeed, countReadings, and calcAverage for typed-in numbers."
+        }
+      ]
+    },
+    {
+      "name": "TODO 9: Suborbital (flight_bravo.txt)",
+      "input": "flight_bravo.txt\n",
+      "expectedOutput": "Status: Suborbital",
+      "comparison": "included",
+      "points": 1,
+      "message": "flight_bravo.txt ends at 14,250.5 km/h, which is under 28,000.",
+      "helpTopic": "todo9",
+      "possibleErrors": [
+        {
+          "type": "expected_missing",
+          "message": "Check that getStatus returns Suborbital for speeds under 28,000, and that displayReport passes it the current speed, not the average."
+        }
+      ]
+    },
+    {
+      "name": "TODO 9: Exactly 28,000 is Orbital (flight_alpha.txt)",
+      "input": "flight_alpha.txt\n",
+      "expectedOutput": "Status: Orbital",
+      "comparison": "included",
+      "points": 1,
+      "message": "flight_alpha.txt ends at exactly 28,000 km/h, which is Orbital.",
+      "helpTopic": "todo9",
+      "possibleErrors": [
+        {
+          "type": "hardcoded_output_hint",
+          "badText": "status: suborbital",
+          "message": "28,000 should be Orbital. The Orbital range starts at 28,000, so the check is >= 28000, not > 28000."
+        },
+        {
+          "type": "expected_missing",
+          "message": "Check that getStatus returns Orbital for 28,000, and that displayReport passes it the current speed, not the average."
+        }
+      ]
+    },
+    {
+      "name": "TODO 9: Exactly 40,000 is Escape velocity (flight_delta.txt)",
+      "input": "flight_delta.txt\n",
+      "expectedOutput": "Status: Escape velocity",
+      "comparison": "included",
+      "points": 1,
+      "message": "flight_delta.txt ends at exactly 40,000 km/h, which is Escape velocity.",
+      "helpTopic": "todo9",
+      "possibleErrors": [
+        {
+          "type": "hardcoded_output_hint",
+          "badText": "status: orbital",
+          "message": "40,000 should be Escape velocity. That range starts at 40,000, so the check is >= 40000, not > 40000."
+        },
+        {
+          "type": "expected_missing",
+          "message": "Check that getStatus returns Escape velocity for 40,000 and up."
+        }
+      ]
+    },
+    {
+      "name": "TODO 10: Report heading and file name",
+      "input": "flight_bravo.txt\n",
+      "expectedOutput": "=== Flight Log Report === Log file: flight_bravo.txt Readings:",
+      "comparison": "included",
+      "points": 1,
+      "message": "The report starts with its heading, then the log file's name.",
+      "helpTopic": "todo10",
+      "possibleErrors": [
+        {
+          "type": "expected_missing",
+          "message": "Check the first two lines of displayReport against the README: === Flight Log Report === and Log file: [file name]."
         }
       ]
     }
